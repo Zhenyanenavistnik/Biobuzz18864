@@ -8,7 +8,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
 public class DcMototPlus {
 
-    private int dir =1;
+    private int dir = 1;
     private final DcMotorEx dcMotorEx;
 
     public DcMototPlus(DcMotorEx dcMotorEx) {

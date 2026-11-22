@@ -1,10 +1,17 @@
 package org.firstinspires.ftc.teamcode.Hardware;
 
+import static org.firstinspires.ftc.teamcode.Config.StartConfig.gunConfig;
+
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.Config.StartConfig;
 import org.firstinspires.ftc.teamcode.Hardware.Devices.DcMototPlus;
+import org.firstinspires.ftc.teamcode.Hardware.Devices.ServoMotor;
+import org.firstinspires.ftc.teamcode.Utils.PID.PidStatus;
 
 public class DevicePool {
 
@@ -18,17 +25,67 @@ public class DevicePool {
 
     public DcMototPlus gunMotorP;
 
+    public DcMototPlus gunMotorPB;
+
+    public DcMototPlus RF;
+    public DcMototPlus RB;
+    public DcMototPlus LF;
+    public DcMototPlus LB;
+
+    public ServoMotor servoMotor;
+
+
+
+
+
     public void init(HardwareMap map){
         hardwareMap = map;
 
+        servoMotor = createServoMotor("servoMotor","ServoEncoder", gunConfig.servoPid, gunConfig.servoCenter);
+
         gunMotorP = createDcMotorPlus("gunMotorP");
 
+        gunMotorPB = createDcMotorPlus("gunMotorPB");
+
+        /*
+        RF = createDcMotorPlus("RF");
+        RB = createDcMotorPlus("RB");
+        LF = createDcMotorPlus("LF");
+        LB = createDcMotorPlus("LB");
+
+         */
+
+        gunMotorP.setDir(-1);
+
+        servoMotor.setDir(-1);
+
         gunMotorP.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        /*
+        RF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        RB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        LB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        LF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+         */
 
         gunMotorP.reset();
+        gunMotorPB.reset();
+
+        servoMotor.reset();
+        /*
+        RB.reset();
+        RF.reset();
+        LB.reset();
+        LF.reset();
+
+         */
     }
 
     private DcMototPlus createDcMotorPlus(String name){
         return new DcMototPlus(hardwareMap.get(DcMotorEx.class, name));
+    }
+
+    private ServoMotor createServoMotor(String ServoName, String EncoderName, PidStatus status,double center){
+        return new ServoMotor(hardwareMap.get(CRServo.class,ServoName),hardwareMap.get(DcMotorEx.class,EncoderName),status,center);
     }
 }
