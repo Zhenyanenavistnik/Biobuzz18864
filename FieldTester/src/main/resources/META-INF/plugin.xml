@@ -1,0 +1,13 @@
+<idea-plugin>
+    <id>dev.robotfield.studio</id>
+    <name>Robot Field</name>
+    <version>1.0.0</version>
+    <description>Интерактивное поле с роботом в Android Studio.</description>
+    <idea-version since-build="242"/>
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="Robot Field" anchor="right"
+            factoryClass="dev.robotfield.RobotFieldToolWindow"/>
+    </extensions>
+</idea-plugin>
