@@ -16,3 +16,4 @@ public final class RobotFieldToolWindow implements ToolWindowFactory, DumbAware 
         toolWindow.getContentManager().addContent(content);
     }
 }
+//.\gradlew.bat -p ./FieldTester buildPlugin

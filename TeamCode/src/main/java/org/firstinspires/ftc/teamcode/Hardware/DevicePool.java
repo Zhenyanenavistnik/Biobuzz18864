@@ -2,14 +2,17 @@ package org.firstinspires.ftc.teamcode.Hardware;
 
 import static org.firstinspires.ftc.teamcode.Config.StartConfig.gunConfig;
 
+import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Config.StartConfig;
 import org.firstinspires.ftc.teamcode.Hardware.Devices.DcMototPlus;
+import org.firstinspires.ftc.teamcode.Hardware.Devices.PinPointPlus;
 import org.firstinspires.ftc.teamcode.Hardware.Devices.ServoMotor;
 import org.firstinspires.ftc.teamcode.Utils.PID.PidStatus;
 
@@ -34,6 +37,10 @@ public class DevicePool {
 
     public ServoMotor servoMotor;
 
+    public Servo gunServo;
+
+    public PinPointPlus odo;
+
 
 
 
@@ -47,6 +54,10 @@ public class DevicePool {
 
         gunMotorPB = createDcMotorPlus("gunMotorPB");
 
+        gunServo = createServo("gunServo");
+
+        odo = createOdo("PinPoint");
+
         /*
         RF = createDcMotorPlus("RF");
         RB = createDcMotorPlus("RB");
@@ -55,9 +66,13 @@ public class DevicePool {
 
          */
 
+        gunServo.scaleRange(0,1);
+
         gunMotorP.setDir(-1);
 
         servoMotor.setDir(-1);
+
+        gunServo.setDirection(Servo.Direction.FORWARD);
 
         gunMotorP.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         /*
@@ -79,6 +94,8 @@ public class DevicePool {
         LF.reset();
 
          */
+
+        gunServo.setPosition(0.5);
     }
 
     private DcMototPlus createDcMotorPlus(String name){
@@ -87,5 +104,12 @@ public class DevicePool {
 
     private ServoMotor createServoMotor(String ServoName, String EncoderName, PidStatus status,double center){
         return new ServoMotor(hardwareMap.get(CRServo.class,ServoName),hardwareMap.get(DcMotorEx.class,EncoderName),status,center);
+    }
+    private Servo createServo(String name){
+        return hardwareMap.get(Servo.class, name);
+    }
+
+    private PinPointPlus createOdo(String name){
+        return new PinPointPlus(hardwareMap.get(GoBildaPinpointDriver.class,name));
     }
 }

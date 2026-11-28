@@ -12,34 +12,34 @@ y---|---
 
 public class Vector2d {
 
-    public final double y;
-    public final double x;
+    public double y;
+    public double x;
 
-    public Vector2d rotate(double rad){
+    public void rotate(double rad){
         double x1 = x * cos(rad) - y * sin(rad);
         double y1 = x * sin(rad) + y * cos(rad);
-        return new Vector2d(x1,
-                            y1);
+        x = x1;
+        y = y1;
     }
 
     public double dot(Vector2d b){
         return x*b.x + y*b.y;
     }
 
-    public Vector2d plus(Vector2d b) {
-        return new Vector2d(x+b.x,
-                            y+b.y);
+    public void plus(Vector2d b) {
+        x += b.x;
+        y += b.y;
     }
 
 
-    public Vector2d minus(Vector2d b) {
-        return new Vector2d(x - b.x,
-                            y - b.y);
+    public void minus(Vector2d b) {
+        x -= b.x;
+        y -= b.y;
     }
 
-    public Vector2d multiply(double b) {
-        return new Vector2d(x*b,
-                            y*b);
+    public void multiply(double b) {
+        x *= b;
+        y *= b;
     }
 
     public Vector2d() {
@@ -65,9 +65,10 @@ public class Vector2d {
         return x*x + y*y;
     }
 
-    public Vector2d norm(){
+    public void norm(){
         double h = Math.atan2(y,x);
-        return new Vector2d(cos(h),sin(h));
+        x = cos(h);
+        y = sin(h);
     }
 
     public double getAngle(){
